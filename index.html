@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ManhwaTracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -12,21 +12,27 @@
       --red: #e63946; --red-dark: #7a0000; --red-dim: #2a0a0a;
       --text: #f0f0f0; --text-muted: #777777; --border: #2a2a2a;
       --fab-size: 56px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: var(--bg); color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      min-height: 100vh; max-width: 480px; margin: 0 auto; padding-bottom: 88px;
+      min-height: 100vh; max-width: 480px; margin: 0 auto;
+      padding-bottom: calc(88px + var(--safe-bottom));
+      padding-top: var(--safe-top);
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior: none;
     }
 
-    /* LOADING */
-    .loading-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 998; }
+    .loading-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; z-index: 998; }
     .loading-screen.hidden { display: none; }
+    .loading-logo { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 3px; color: var(--text); }
+    .loading-logo span { color: var(--red); }
     .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* LOGIN */
     .login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 999; padding: 40px 24px; }
     .login-screen.hidden { display: none; }
     .login-logo { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 3px; text-align: center; line-height: 1; }
@@ -34,17 +40,16 @@
     .login-sub { font-size: 13px; color: var(--text-muted); text-align: center; max-width: 260px; line-height: 1.6; }
     .btn-google { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 24px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: border-color 0.2s, background 0.2s; width: 100%; max-width: 280px; justify-content: center; }
     .btn-google:hover { border-color: var(--red); background: var(--surface2); }
-    .login-error { font-size: 12px; color: var(--red); text-align: center; display: none; }
+    .btn-google:disabled { opacity: 0.5; cursor: not-allowed; }
+    .login-error { font-size: 12px; color: var(--red); text-align: center; display: none; max-width: 280px; line-height: 1.5; }
     .login-error.show { display: block; }
 
-    /* HEADER */
     .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 16px; position: sticky; top: 0; z-index: 100; }
     .header-top { display: flex; align-items: center; justify-content: space-between; }
     .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--red); line-height: 1; }
     .header h1 span { color: var(--text); }
     .header-right { display: flex; align-items: center; gap: 4px; }
     .user-avatar { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.2s; object-fit: cover; }
-    .user-avatar:hover { border-color: var(--red); }
     .logout-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 6px; border-radius: 8px; transition: color 0.2s; display: flex; align-items: center; }
     .logout-btn:hover { color: var(--red); }
     .search-wrapper { display: flex; align-items: center; gap: 4px; }
@@ -55,108 +60,63 @@
     .search-input { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; width: 140px; outline: none; transition: border-color 0.2s; }
     .search-input:focus { border-color: var(--red); }
 
-    /* TABS */
     .tabs { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 8px; overflow-x: auto; scrollbar-width: none; position: sticky; top: 57px; z-index: 99; }
     .tabs::-webkit-scrollbar { display: none; }
     .tab { background: none; border: none; color: var(--text-muted); padding: 12px 14px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .tab.active { color: var(--red); border-bottom-color: var(--red); }
 
-    /* COUNTERS */
     .counters { display: flex; gap: 8px; padding: 12px 16px; overflow-x: auto; scrollbar-width: none; }
     .counters::-webkit-scrollbar { display: none; }
     .counter-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 12px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
     .counter-pill span { color: var(--red); font-weight: 600; }
 
-    /* CARDS */
     .card-list { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     .card:hover { border-color: var(--red-dark); }
-
-    /* Card top: cover + info */
     .card-top { display: flex; }
-
-    /* Cover */
     .card-cover-wrap { position: relative; width: 80px; min-height: 110px; flex-shrink: 0; }
     .card-cover { width: 100%; height: 100%; min-height: 110px; object-fit: cover; display: block; }
     .cover-placeholder { width: 100%; min-height: 110px; background: var(--red-dim); display: flex; align-items: center; justify-content: center; }
     .cover-edit-btn { position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; cursor: pointer; border: none; }
-    .card-cover-wrap:hover .cover-edit-btn { opacity: 1; }
+    .card-cover-wrap:hover .cover-edit-btn, .card-cover-wrap:active .cover-edit-btn { opacity: 1; }
     .cover-file-input { display: none; }
-
     .card-body { flex: 1; padding: 12px 12px 8px; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
     .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; line-height: 1.1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 155px; }
     .delete-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 2px; border-radius: 4px; flex-shrink: 0; transition: color 0.2s; display: flex; align-items: center; }
     .delete-btn:hover { color: var(--red); }
     .card-genre { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-
-    /* === CONTROLES TÁCTILES === */
     .card-controls { padding: 10px 12px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
-
-    /* Capítulo con - número + */
     .chapter-row { display: flex; align-items: center; justify-content: space-between; }
     .chapter-label-txt { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .chapter-stepper { display: flex; align-items: center; gap: 0; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .step-btn {
-      background: none; border: none; color: var(--text-muted);
-      width: 40px; height: 36px; font-size: 20px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, color 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
+    .chapter-stepper { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .step-btn { background: none; border: none; color: var(--text-muted); width: 40px; height: 36px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; user-select: none; }
     .step-btn:active { background: var(--red-dim); color: var(--red); }
-    .step-btn:hover  { color: var(--red); }
-    .step-num {
-      min-width: 44px; text-align: center;
-      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
-      color: var(--red); letter-spacing: 1px;
-      cursor: pointer; padding: 0 4px;
-    }
-    /* Tap en el número abre input manual */
-    .step-num-input {
-      background: none; border: none; outline: none;
-      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
-      color: var(--red); text-align: center; width: 52px;
-      padding: 0 4px;
-    }
-
-    /* Estado: 3 pills táctiles */
+    .step-num { min-width: 44px; text-align: center; font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--red); letter-spacing: 1px; cursor: pointer; padding: 0 4px; }
+    .step-num-input { background: none; border: none; outline: none; font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--red); text-align: center; width: 52px; padding: 0 4px; }
     .status-row { display: flex; gap: 6px; }
-    .status-pill {
-      flex: 1; padding: 7px 4px; border-radius: 8px; border: 1px solid var(--border);
-      background: var(--surface2); color: var(--text-muted);
-      font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
-      text-align: center; cursor: pointer; transition: all 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
+    .status-pill { flex: 1; padding: 7px 4px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; user-select: none; }
     .status-pill.active-leyendo    { background: #1a3a1a; color: #4caf50; border-color: #4caf50; }
     .status-pill.active-pendiente  { background: #1a1a3a; color: #5c9bd6; border-color: #5c9bd6; }
     .status-pill.active-completado { background: #2a1a00; color: #ff9800; border-color: #ff9800; }
 
-    /* EMPTY */
     .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
     .empty-state p { margin-top: 12px; font-size: 14px; }
 
-    /* FAB */
-    .fab { position: fixed; bottom: 24px; right: calc(50% - 240px + 24px); width: var(--fab-size); height: var(--fab-size); border-radius: 50%; background: var(--red); border: none; color: white; font-size: 30px; cursor: pointer; box-shadow: 0 4px 20px rgba(230,57,70,0.5); display: flex; align-items: center; justify-content: center; transition: transform 0.25s, background 0.2s; z-index: 200; }
+    .fab { position: fixed; bottom: calc(24px + var(--safe-bottom)); right: calc(50% - 240px + 24px); width: var(--fab-size); height: var(--fab-size); border-radius: 50%; background: var(--red); border: none; color: white; font-size: 30px; cursor: pointer; box-shadow: 0 4px 20px rgba(230,57,70,0.5); display: flex; align-items: center; justify-content: center; transition: transform 0.25s, background 0.2s; z-index: 200; }
     @media (max-width: 480px) { .fab { right: 24px; } }
     .fab:hover { transform: scale(1.1); background: #c1121f; }
     .fab.open  { transform: rotate(45deg); background: #c1121f; }
 
-    /* OVERLAY */
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
     .overlay.show { opacity: 1; pointer-events: all; }
 
-    /* BOTTOM SHEET */
-    .bottom-sheet { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(110%); width: 100%; max-width: 480px; background: var(--surface); border-radius: 20px 20px 0 0; border-top: 1px solid var(--border); z-index: 400; padding: 0 20px 36px; transition: transform 0.35s cubic-bezier(0.32,0.72,0,1); max-height: 92vh; overflow-y: auto; }
+    .bottom-sheet { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(110%); width: 100%; max-width: 480px; background: var(--surface); border-radius: 20px 20px 0 0; border-top: 1px solid var(--border); z-index: 400; padding: 0 20px calc(36px + var(--safe-bottom)); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1); max-height: 92vh; overflow-y: auto; }
     .bottom-sheet.show { transform: translateX(-50%) translateY(0); }
     .sheet-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 12px auto 20px; }
     .sheet-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1.5px; color: var(--red); margin-bottom: 20px; }
 
-    /* FORM */
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
     .form-input, .form-select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s; }
@@ -166,7 +126,6 @@
     .form-error { font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
     .form-error.show { display: block; }
 
-    /* Upload */
     .img-upload-area { border: 2px dashed var(--border); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; }
     .img-upload-area:hover { border-color: var(--red); background: var(--red-dim); }
     .img-upload-area.has-image { padding: 0; border-style: solid; border-color: var(--red-dark); overflow: hidden; }
@@ -180,14 +139,16 @@
     .btn-submit:active { transform: scale(0.98); }
     .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* TOAST */
-    .toast { position: fixed; bottom: 92px; left: 50%; transform: translateX(-50%) translateY(16px); background: var(--surface); border: 1px solid var(--red-dark); border-radius: 10px; padding: 10px 20px; font-size: 13px; color: var(--text); z-index: 500; opacity: 0; pointer-events: none; transition: all 0.3s; white-space: nowrap; }
+    .toast { position: fixed; bottom: calc(92px + var(--safe-bottom)); left: 50%; transform: translateX(-50%) translateY(16px); background: var(--surface); border: 1px solid var(--red-dark); border-radius: 10px; padding: 10px 20px; font-size: 13px; color: var(--text); z-index: 500; opacity: 0; pointer-events: none; transition: all 0.3s; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
-  <div class="loading-screen" id="loadingScreen"><div class="spinner"></div></div>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-logo">MANHWA<span>TRACKER</span></div>
+    <div class="spinner"></div>
+  </div>
 
   <div class="login-screen hidden" id="loginScreen">
     <div class="login-logo">MANHWA<br><span>TRACKER</span></div>
@@ -201,7 +162,7 @@
       </svg>
       Continuar con Google
     </button>
-    <span class="login-error" id="loginError">Error al iniciar sesión. Intenta de nuevo.</span>
+    <span class="login-error" id="loginError"></span>
   </div>
 
   <div id="app" style="display:none">
@@ -224,19 +185,16 @@
         </div>
       </div>
     </header>
-
     <nav class="tabs" id="tabs">
       <button class="tab active" data-filter="todos">Todos</button>
       <button class="tab" data-filter="Leyendo">Leyendo</button>
       <button class="tab" data-filter="Pendiente">Pendiente</button>
       <button class="tab" data-filter="Completado">Completado</button>
     </nav>
-
     <div class="counters" id="counters"></div>
     <main class="card-list" id="cardList"></main>
     <button class="fab" id="fab" aria-label="Agregar manhwa">+</button>
     <div class="overlay" id="overlay"></div>
-
     <div class="bottom-sheet" id="bottomSheet" role="dialog" aria-modal="true">
       <div class="sheet-handle"></div>
       <h2 class="sheet-title">AGREGAR MANHWA</h2>
@@ -284,9 +242,13 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <canvas id="resizeCanvas" style="display:none"></canvas>
 
+  <!-- Capacitor core (se activa solo cuando corre como app nativa) -->
+  <script src="capacitor.js"></script>
+
   <script type="module">
     import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithCredential,
+             signOut, onAuthStateChanged }
                                    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, collection, doc, addDoc, deleteDoc, updateDoc, query, orderBy, onSnapshot }
                                    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -304,6 +266,9 @@
     const auth  = getAuth(fbApp);
     const db    = getFirestore(fbApp);
 
+    // ── Detecta si corre dentro de la app nativa de Capacitor ──────────────
+    const isNative = () => window.Capacitor?.isNativePlatform?.() === true;
+
     const ALLOWED_STATUSES = ['Leyendo', 'Pendiente', 'Completado'];
     const ALLOWED_GENRES   = ['Acción', 'Romance', 'Fantasía', 'Terror', 'Drama'];
     const TITLE_REGEX      = /^.{1,100}$/;
@@ -311,7 +276,6 @@
 
     const state = { items: [], filter: 'todos', search: '', uid: null, unsub: null, pendingCover: null };
 
-    // SEGURIDAD
     function sanitizeInput(str) {
       return String(str).trim().replace(/[<>"'`&]/g, c =>
         ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;','&':'&amp;'}[c])
@@ -322,7 +286,6 @@
     function isAllowedStatus(v) { return ALLOWED_STATUSES.includes(v); }
     function isAllowedGenre(v)  { return ALLOWED_GENRES.includes(v); }
 
-    // IMAGEN
     function resizeImageToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -333,9 +296,9 @@
           img.onload = () => {
             const canvas = document.getElementById('resizeCanvas');
             let w = img.width, h = img.height;
-            const ratio = Math.min(COVER_MAX_W / w, COVER_MAX_H / h, 1);
-            canvas.width  = Math.round(w * ratio);
-            canvas.height = Math.round(h * ratio);
+            const ratio = Math.min(COVER_MAX_W/w, COVER_MAX_H/h, 1);
+            canvas.width  = Math.round(w*ratio);
+            canvas.height = Math.round(h*ratio);
             canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
             resolve(canvas.toDataURL('image/jpeg', COVER_QUALITY));
           };
@@ -345,7 +308,6 @@
       });
     }
 
-    // FIRESTORE
     function userCol() { return collection(db, 'users', state.uid, 'manhwas'); }
 
     function subscribeToItems() {
@@ -356,7 +318,33 @@
       });
     }
 
-    // CRUD
+    // ── Google Sign-In: nativo en APK, popup en web ─────────────────────────
+    async function handleGoogleSignIn() {
+      const btn   = document.getElementById('btnGoogle');
+      const errEl = document.getElementById('loginError');
+      btn.disabled = true;
+      errEl.classList.remove('show');
+
+      try {
+        if (isNative()) {
+          // Autenticación nativa a través del plugin @capacitor-firebase/authentication
+          const { FirebaseAuthentication } = window.Capacitor.Plugins;
+          const result = await FirebaseAuthentication.signInWithGoogle();
+          const credential = GoogleAuthProvider.credential(result.credential.idToken);
+          await signInWithCredential(auth, credential);
+        } else {
+          // Fallback web: popup (funciona en navegador para desarrollo)
+          const provider = new GoogleAuthProvider();
+          await signInWithPopup(auth, provider);
+        }
+      } catch (e) {
+        btn.disabled = false;
+        errEl.textContent = 'Error al iniciar sesión: ' + (e.message || e.code || 'desconocido');
+        errEl.classList.add('show');
+        console.error('Sign-in error:', e);
+      }
+    }
+
     async function addItem() {
       if (!validateForm()) return;
       const genre  = document.getElementById('inputGenre').value;
@@ -368,13 +356,13 @@
         await addDoc(userCol(), {
           title:     sanitizeInput(document.getElementById('inputTitle').value),
           genre, status,
-          chapter:   parseInt(document.getElementById('inputChapter').value, 10) || 0,
-          cover:     state.pendingCover || '',
+          chapter:   parseInt(document.getElementById('inputChapter').value,10)||0,
+          cover:     state.pendingCover||'',
           createdAt: Date.now(),
         });
         closeSheet(); resetForm(); showToast('Manhwa agregado ✓');
       } catch { showToast('Error al agregar.'); }
-      finally  { btn.disabled = false; btn.textContent = 'AGREGAR'; }
+      finally  { btn.disabled=false; btn.textContent='AGREGAR'; }
     }
 
     async function deleteItem(id) {
@@ -384,199 +372,144 @@
 
     async function updateChapter(id, value) {
       if (!isValidChapter(value)) return;
-      try { await updateDoc(doc(db,'users',state.uid,'manhwas',id), { chapter: parseInt(value,10) }); }
-      catch(e) { console.error(e); }
+      try { await updateDoc(doc(db,'users',state.uid,'manhwas',id),{chapter:parseInt(value,10)}); }
+      catch(e){console.error(e);}
     }
 
     async function updateStatus(id, value) {
       if (!isAllowedStatus(value)) return;
-      try { await updateDoc(doc(db,'users',state.uid,'manhwas',id), { status: value }); }
-      catch(e) { console.error(e); }
+      try { await updateDoc(doc(db,'users',state.uid,'manhwas',id),{status:value}); }
+      catch(e){console.error(e);}
     }
 
     async function updateCover(id, file) {
       try {
         showToast('Procesando imagen...');
         const base64 = await resizeImageToBase64(file);
-        await updateDoc(doc(db,'users',state.uid,'manhwas',id), { cover: base64 });
+        await updateDoc(doc(db,'users',state.uid,'manhwas',id),{cover:base64});
         showToast('Portada actualizada ✓');
       } catch { showToast('Error al actualizar portada.'); }
     }
 
-    // VALIDACIÓN
     function validateForm() {
       let valid = true;
-      const se = (inp, err, show) => {
-        document.getElementById(inp).classList.toggle('error', show);
-        document.getElementById(err).classList.toggle('show', show);
-        if (show) valid = false;
-      };
-      se('inputTitle',   'errorTitle',   !isValidTitle(document.getElementById('inputTitle').value));
-      se('inputChapter', 'errorChapter', !isValidChapter(document.getElementById('inputChapter').value));
+      const se = (inp,err,show) => { document.getElementById(inp).classList.toggle('error',show); document.getElementById(err).classList.toggle('show',show); if(show) valid=false; };
+      se('inputTitle','errorTitle',!isValidTitle(document.getElementById('inputTitle').value));
+      se('inputChapter','errorChapter',!isValidChapter(document.getElementById('inputChapter').value));
       return valid;
     }
 
-    // FILTRO
     function getFiltered() {
-      let items = state.filter === 'todos' ? state.items : state.items.filter(i => i.status === state.filter);
-      if (state.search.trim()) { const t = state.search.toLowerCase(); items = items.filter(i => i.title.toLowerCase().includes(t)); }
+      let items = state.filter==='todos' ? state.items : state.items.filter(i=>i.status===state.filter);
+      if (state.search.trim()) { const t=state.search.toLowerCase(); items=items.filter(i=>i.title.toLowerCase().includes(t)); }
       return items;
     }
 
-    // RENDER
     function createPlaceholderEl() {
-      const ph = document.createElement('div'); ph.className = 'cover-placeholder';
-      ph.innerHTML = `<svg width="26" height="26" fill="none" stroke="#e63946" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`;
+      const ph=document.createElement('div'); ph.className='cover-placeholder';
+      ph.innerHTML=`<svg width="26" height="26" fill="none" stroke="#e63946" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`;
       return ph;
     }
 
     function createCoverWrap(item) {
-      const wrap = document.createElement('div'); wrap.className = 'card-cover-wrap';
-      if (item.cover) {
-        const img = document.createElement('img'); img.className = 'card-cover';
-        img.src = item.cover; img.alt = ''; img.loading = 'lazy';
-        img.onerror = () => img.replaceWith(createPlaceholderEl());
+      const wrap=document.createElement('div'); wrap.className='card-cover-wrap';
+      if(item.cover){
+        const img=document.createElement('img'); img.className='card-cover'; img.src=item.cover; img.alt=''; img.loading='lazy';
+        img.onerror=()=>img.replaceWith(createPlaceholderEl());
         wrap.appendChild(img);
       } else { wrap.appendChild(createPlaceholderEl()); }
-
-      const editBtn = document.createElement('button'); editBtn.className = 'cover-edit-btn'; editBtn.title = 'Cambiar portada';
-      editBtn.innerHTML = `<svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
-      const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.className='cover-file-input'; fileInput.accept='image/png,image/jpeg,image/webp';
-      fileInput.addEventListener('change', async e => { const f = e.target.files[0]; if(f) await updateCover(item.id, f); });
-      editBtn.addEventListener('click', () => fileInput.click());
+      const editBtn=document.createElement('button'); editBtn.className='cover-edit-btn'; editBtn.title='Cambiar portada';
+      editBtn.innerHTML=`<svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
+      const fileInput=document.createElement('input'); fileInput.type='file'; fileInput.className='cover-file-input'; fileInput.accept='image/png,image/jpeg,image/webp';
+      fileInput.addEventListener('change', async e=>{ const f=e.target.files[0]; if(f) await updateCover(item.id,f); });
+      editBtn.addEventListener('click',()=>fileInput.click());
       wrap.appendChild(editBtn); wrap.appendChild(fileInput);
       return wrap;
     }
 
-    // === STEPPER TÁCTIL de capítulo ===
     function createChapterStepper(item) {
-      const row = document.createElement('div'); row.className = 'chapter-row';
-
-      const lbl = document.createElement('span'); lbl.className = 'chapter-label-txt'; lbl.textContent = 'Capítulo';
-
-      const stepper = document.createElement('div'); stepper.className = 'chapter-stepper';
-
-      const btnMinus = document.createElement('button'); btnMinus.className = 'step-btn'; btnMinus.textContent = '−'; btnMinus.setAttribute('aria-label','Capítulo anterior');
-      const numEl    = document.createElement('span');   numEl.className = 'step-num'; numEl.textContent = item.chapter;
-      const btnPlus  = document.createElement('button'); btnPlus.className = 'step-btn'; btnPlus.textContent = '+'; btnPlus.setAttribute('aria-label','Siguiente capítulo');
-
-      let currentChapter = item.chapter;
-
-      // Tap en número → input manual
-      numEl.addEventListener('click', () => {
-        const inp = document.createElement('input');
-        inp.type = 'number'; inp.className = 'step-num-input';
-        inp.value = currentChapter; inp.min = '0';
-        numEl.replaceWith(inp);
-        inp.focus(); inp.select();
-        const confirm = async () => {
-          const val = parseInt(inp.value, 10);
-          currentChapter = isNaN(val) || val < 0 ? currentChapter : val;
-          inp.replaceWith(numEl);
-          numEl.textContent = currentChapter;
-          await updateChapter(item.id, currentChapter);
-        };
-        inp.addEventListener('blur', confirm);
-        inp.addEventListener('keydown', e => { if(e.key==='Enter') inp.blur(); });
+      const row=document.createElement('div'); row.className='chapter-row';
+      const lbl=document.createElement('span'); lbl.className='chapter-label-txt'; lbl.textContent='Capítulo';
+      const stepper=document.createElement('div'); stepper.className='chapter-stepper';
+      const btnMinus=document.createElement('button'); btnMinus.className='step-btn'; btnMinus.textContent='−'; btnMinus.setAttribute('aria-label','Anterior');
+      const numEl=document.createElement('span'); numEl.className='step-num'; numEl.textContent=item.chapter;
+      const btnPlus=document.createElement('button'); btnPlus.className='step-btn'; btnPlus.textContent='+'; btnPlus.setAttribute('aria-label','Siguiente');
+      let cur=item.chapter;
+      numEl.addEventListener('click',()=>{
+        const inp=document.createElement('input'); inp.type='number'; inp.className='step-num-input'; inp.value=cur; inp.min='0';
+        numEl.replaceWith(inp); inp.focus(); inp.select();
+        const confirm=async()=>{ const v=parseInt(inp.value,10); cur=isNaN(v)||v<0?cur:v; inp.replaceWith(numEl); numEl.textContent=cur; await updateChapter(item.id,cur); };
+        inp.addEventListener('blur',confirm);
+        inp.addEventListener('keydown',e=>{ if(e.key==='Enter') inp.blur(); });
       });
-
-      btnMinus.addEventListener('click', async () => {
-        if (currentChapter <= 0) return;
-        currentChapter--;
-        numEl.textContent = currentChapter;
-        await updateChapter(item.id, currentChapter);
-      });
-
-      btnPlus.addEventListener('click', async () => {
-        currentChapter++;
-        numEl.textContent = currentChapter;
-        await updateChapter(item.id, currentChapter);
-      });
-
+      btnMinus.addEventListener('click',async()=>{ if(cur<=0) return; cur--; numEl.textContent=cur; await updateChapter(item.id,cur); });
+      btnPlus.addEventListener('click',async()=>{ cur++; numEl.textContent=cur; await updateChapter(item.id,cur); });
       stepper.appendChild(btnMinus); stepper.appendChild(numEl); stepper.appendChild(btnPlus);
       row.appendChild(lbl); row.appendChild(stepper);
       return row;
     }
 
-    // === PILLS TÁCTILES de estado ===
     function createStatusPills(item) {
-      const row = document.createElement('div'); row.className = 'status-row';
-      const classMap = { Leyendo:'active-leyendo', Pendiente:'active-pendiente', Completado:'active-completado' };
-
-      ALLOWED_STATUSES.forEach(st => {
-        const pill = document.createElement('button'); pill.className = 'status-pill';
-        pill.textContent = st;
-        if (st === item.status) pill.classList.add(classMap[st]);
-        pill.addEventListener('click', async () => {
-          if (st === item.status) return; // ya activo
-          // No se llama updateStatus porque onSnapshot re-renderiza la card automáticamente
-          await updateStatus(item.id, st);
-        });
+      const row=document.createElement('div'); row.className='status-row';
+      const classMap={Leyendo:'active-leyendo',Pendiente:'active-pendiente',Completado:'active-completado'};
+      ALLOWED_STATUSES.forEach(st=>{
+        const pill=document.createElement('button'); pill.className='status-pill'; pill.textContent=st;
+        if(st===item.status) pill.classList.add(classMap[st]);
+        pill.addEventListener('click',async()=>{ if(st===item.status) return; await updateStatus(item.id,st); });
         row.appendChild(pill);
       });
       return row;
     }
 
     function createCard(item) {
-      const card = document.createElement('div'); card.className = 'card';
-
-      // Top: cover + info básica
-      const top = document.createElement('div'); top.className = 'card-top';
+      const card=document.createElement('div'); card.className='card';
+      const top=document.createElement('div'); top.className='card-top';
       top.appendChild(createCoverWrap(item));
-
-      const body = document.createElement('div'); body.className = 'card-body';
-      const hdr  = document.createElement('div'); hdr.className = 'card-header';
-      const ttl  = document.createElement('div'); ttl.className = 'card-title'; ttl.textContent = item.title;
-      const del  = document.createElement('button'); del.className = 'delete-btn'; del.setAttribute('aria-label','Eliminar');
-      del.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`;
-      del.addEventListener('click', () => deleteItem(item.id));
+      const body=document.createElement('div'); body.className='card-body';
+      const hdr=document.createElement('div'); hdr.className='card-header';
+      const ttl=document.createElement('div'); ttl.className='card-title'; ttl.textContent=item.title;
+      const del=document.createElement('button'); del.className='delete-btn'; del.setAttribute('aria-label','Eliminar');
+      del.innerHTML=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`;
+      del.addEventListener('click',()=>deleteItem(item.id));
       hdr.appendChild(ttl); hdr.appendChild(del);
-
-      const genre = document.createElement('div'); genre.className = 'card-genre'; genre.textContent = item.genre;
-
+      const genre=document.createElement('div'); genre.className='card-genre'; genre.textContent=item.genre;
       body.appendChild(hdr); body.appendChild(genre);
-      top.appendChild(body);
-      card.appendChild(top);
-
-      // Bottom: controles táctiles
-      const ctrl = document.createElement('div'); ctrl.className = 'card-controls';
-      ctrl.appendChild(createChapterStepper(item));
-      ctrl.appendChild(createStatusPills(item));
+      top.appendChild(body); card.appendChild(top);
+      const ctrl=document.createElement('div'); ctrl.className='card-controls';
+      ctrl.appendChild(createChapterStepper(item)); ctrl.appendChild(createStatusPills(item));
       card.appendChild(ctrl);
-
       return card;
     }
 
     function renderList() {
-      const c = document.getElementById('cardList');
-      while (c.firstChild) c.removeChild(c.firstChild);
-      const filtered = getFiltered();
-      if (!filtered.length) {
-        const e = document.createElement('div'); e.className = 'empty-state';
-        e.innerHTML = `<svg width="48" height="48" fill="none" stroke="#333" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`;
-        const p = document.createElement('p'); p.textContent = state.items.length===0 ? 'Sin manhwas. Agrega uno con el botón +' : 'Sin resultados.';
+      const c=document.getElementById('cardList');
+      while(c.firstChild) c.removeChild(c.firstChild);
+      const filtered=getFiltered();
+      if(!filtered.length){
+        const e=document.createElement('div'); e.className='empty-state';
+        e.innerHTML=`<svg width="48" height="48" fill="none" stroke="#333" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`;
+        const p=document.createElement('p'); p.textContent=state.items.length===0?'Sin manhwas. Agrega uno con el botón +':'Sin resultados.';
         e.appendChild(p); c.appendChild(e); return;
       }
-      const frag = document.createDocumentFragment();
-      filtered.forEach(item => frag.appendChild(createCard(item)));
+      const frag=document.createDocumentFragment();
+      filtered.forEach(item=>frag.appendChild(createCard(item)));
       c.appendChild(frag);
     }
 
     function renderCounters() {
-      const c = document.getElementById('counters');
-      while (c.firstChild) c.removeChild(c.firstChild);
-      const counts = { Total:state.items.length, Leyendo:state.items.filter(i=>i.status==='Leyendo').length, Pendiente:state.items.filter(i=>i.status==='Pendiente').length, Completado:state.items.filter(i=>i.status==='Completado').length };
-      const frag = document.createDocumentFragment();
-      Object.entries(counts).forEach(([lbl,val]) => {
-        const pill = document.createElement('div'); pill.className = 'counter-pill';
+      const c=document.getElementById('counters');
+      while(c.firstChild) c.removeChild(c.firstChild);
+      const counts={Total:state.items.length,Leyendo:state.items.filter(i=>i.status==='Leyendo').length,Pendiente:state.items.filter(i=>i.status==='Pendiente').length,Completado:state.items.filter(i=>i.status==='Completado').length};
+      const frag=document.createDocumentFragment();
+      Object.entries(counts).forEach(([lbl,val])=>{
+        const pill=document.createElement('div'); pill.className='counter-pill';
         pill.appendChild(document.createTextNode(lbl+': '));
-        const num = document.createElement('span'); num.textContent = val;
+        const num=document.createElement('span'); num.textContent=val;
         pill.appendChild(num); frag.appendChild(pill);
       });
       c.appendChild(frag);
     }
 
-    // SHEET
     function openSheet()  { document.getElementById('bottomSheet').classList.add('show'); document.getElementById('overlay').classList.add('show'); document.getElementById('fab').classList.add('open'); setTimeout(()=>document.getElementById('inputTitle').focus(),350); }
     function closeSheet() { document.getElementById('bottomSheet').classList.remove('show'); document.getElementById('overlay').classList.remove('show'); document.getElementById('fab').classList.remove('open'); }
     function resetForm()  {
@@ -591,12 +524,10 @@
       document.getElementById('inputCoverFile').value='';
     }
 
-    // TOAST
     let toastTimer=null;
-    function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
+    function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
 
-    // UPLOAD en formulario
-    document.getElementById('inputCoverFile').addEventListener('change', async e => {
+    document.getElementById('inputCoverFile').addEventListener('change', async e=>{
       const file=e.target.files[0]; if(!file) return;
       try {
         showToast('Procesando imagen...');
@@ -610,27 +541,30 @@
       } catch { showToast('Error al procesar imagen.'); }
     });
 
-    // AUTH
-    const provider=new GoogleAuthProvider();
-    document.getElementById('btnGoogle').addEventListener('click', async()=>{ document.getElementById('loginError').classList.remove('show'); try{ await signInWithPopup(auth,provider); }catch{ document.getElementById('loginError').classList.add('show'); } });
-    document.getElementById('logoutBtn').addEventListener('click', async()=>{ if(state.unsub) state.unsub(); await signOut(auth); });
-    onAuthStateChanged(auth, user=>{
+    document.getElementById('btnGoogle').addEventListener('click', handleGoogleSignIn);
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      if (state.unsub) state.unsub();
+      await signOut(auth);
+    });
+
+    onAuthStateChanged(auth, user => {
       document.getElementById('loadingScreen').classList.add('hidden');
-      if(user){
-        state.uid=user.uid;
-        const av=document.getElementById('userAvatar'); if(user.photoURL) av.src=user.photoURL; else av.style.display='none';
+      if (user) {
+        state.uid = user.uid;
+        const av = document.getElementById('userAvatar');
+        if (user.photoURL) av.src = user.photoURL; else av.style.display = 'none';
         document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('app').style.display='block';
+        document.getElementById('app').style.display = 'block';
         subscribeToItems();
       } else {
-        state.uid=null; state.items=[];
-        if(state.unsub){ state.unsub(); state.unsub=null; }
-        document.getElementById('app').style.display='none';
+        state.uid = null; state.items = [];
+        if (state.unsub) { state.unsub(); state.unsub = null; }
+        document.getElementById('app').style.display = 'none';
         document.getElementById('loginScreen').classList.remove('hidden');
       }
     });
 
-    // EVENTS
     document.getElementById('fab').addEventListener('click',()=>document.getElementById('bottomSheet').classList.contains('show')?closeSheet():openSheet());
     document.getElementById('overlay').addEventListener('click',closeSheet);
     document.getElementById('tabs').addEventListener('click',e=>{ const btn=e.target.closest('.tab'); if(!btn) return; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); state.filter=btn.dataset.filter; renderList(); });
