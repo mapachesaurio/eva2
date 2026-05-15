@@ -21,45 +21,24 @@
     }
 
     /* LOADING */
-    .loading-screen {
-      position: fixed; inset: 0; background: var(--bg);
-      display: flex; align-items: center; justify-content: center; z-index: 998;
-    }
+    .loading-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 998; }
     .loading-screen.hidden { display: none; }
-    .spinner {
-      width: 32px; height: 32px; border: 3px solid var(--border);
-      border-top-color: var(--red); border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
+    .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* LOGIN */
-    .login-screen {
-      position: fixed; inset: 0; background: var(--bg);
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 28px; z-index: 999; padding: 40px 24px;
-    }
+    .login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 999; padding: 40px 24px; }
     .login-screen.hidden { display: none; }
     .login-logo { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 3px; text-align: center; line-height: 1; }
     .login-logo span { color: var(--red); }
     .login-sub { font-size: 13px; color: var(--text-muted); text-align: center; max-width: 260px; line-height: 1.6; }
-    .btn-google {
-      display: flex; align-items: center; gap: 12px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 14px 24px; color: var(--text);
-      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
-      cursor: pointer; transition: border-color 0.2s, background 0.2s;
-      width: 100%; max-width: 280px; justify-content: center;
-    }
+    .btn-google { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 24px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: border-color 0.2s, background 0.2s; width: 100%; max-width: 280px; justify-content: center; }
     .btn-google:hover { border-color: var(--red); background: var(--surface2); }
     .login-error { font-size: 12px; color: var(--red); text-align: center; display: none; }
     .login-error.show { display: block; }
 
     /* HEADER */
-    .header {
-      background: var(--surface); border-bottom: 1px solid var(--border);
-      padding: 14px 16px; position: sticky; top: 0; z-index: 100;
-    }
+    .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 16px; position: sticky; top: 0; z-index: 100; }
     .header-top { display: flex; align-items: center; justify-content: space-between; }
     .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--red); line-height: 1; }
     .header h1 span { color: var(--text); }
@@ -90,39 +69,72 @@
 
     /* CARDS */
     .card-list { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; transition: border-color 0.2s; animation: fadeIn 0.3s ease; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.2s; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     .card:hover { border-color: var(--red-dark); }
 
-    /* Cover con botón de editar encima */
+    /* Card top: cover + info */
+    .card-top { display: flex; }
+
+    /* Cover */
     .card-cover-wrap { position: relative; width: 80px; min-height: 110px; flex-shrink: 0; }
-    .card-cover { width: 80px; min-height: 110px; object-fit: cover; display: block; width: 100%; height: 100%; }
-    .cover-placeholder { width: 100%; height: 100%; min-height: 110px; background: var(--red-dim); display: flex; align-items: center; justify-content: center; }
-    .cover-edit-btn {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.55);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.2s; cursor: pointer; border: none;
-    }
+    .card-cover { width: 100%; height: 100%; min-height: 110px; object-fit: cover; display: block; }
+    .cover-placeholder { width: 100%; min-height: 110px; background: var(--red-dim); display: flex; align-items: center; justify-content: center; }
+    .cover-edit-btn { position: absolute; inset: 0; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; cursor: pointer; border: none; }
     .card-cover-wrap:hover .cover-edit-btn { opacity: 1; }
-    .cover-edit-btn svg { pointer-events: none; }
     .cover-file-input { display: none; }
 
-    .card-body { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .card-body { flex: 1; padding: 12px 12px 8px; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
     .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
     .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; line-height: 1.1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 155px; }
     .delete-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 2px; border-radius: 4px; flex-shrink: 0; transition: color 0.2s; display: flex; align-items: center; }
     .delete-btn:hover { color: var(--red); }
     .card-genre { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .status-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; width: fit-content; }
-    .badge-leyendo    { background: #1a3a1a; color: #4caf50; }
-    .badge-pendiente  { background: #1a1a3a; color: #5c9bd6; }
-    .badge-completado { background: #2a1a00; color: #ff9800; }
-    .card-controls { display: flex; gap: 8px; align-items: center; margin-top: 4px; flex-wrap: wrap; }
-    .chapter-control { display: flex; align-items: center; gap: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px; }
-    .chapter-label { font-size: 11px; color: var(--text-muted); }
-    .chapter-input { background: none; border: none; color: var(--red); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; width: 48px; outline: none; text-align: center; }
-    .status-select { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 12px; padding: 4px 8px; outline: none; cursor: pointer; transition: border-color 0.2s; }
-    .status-select:focus { border-color: var(--red); }
+
+    /* === CONTROLES TÁCTILES === */
+    .card-controls { padding: 10px 12px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+
+    /* Capítulo con - número + */
+    .chapter-row { display: flex; align-items: center; justify-content: space-between; }
+    .chapter-label-txt { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .chapter-stepper { display: flex; align-items: center; gap: 0; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .step-btn {
+      background: none; border: none; color: var(--text-muted);
+      width: 40px; height: 36px; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .step-btn:active { background: var(--red-dim); color: var(--red); }
+    .step-btn:hover  { color: var(--red); }
+    .step-num {
+      min-width: 44px; text-align: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      color: var(--red); letter-spacing: 1px;
+      cursor: pointer; padding: 0 4px;
+    }
+    /* Tap en el número abre input manual */
+    .step-num-input {
+      background: none; border: none; outline: none;
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      color: var(--red); text-align: center; width: 52px;
+      padding: 0 4px;
+    }
+
+    /* Estado: 3 pills táctiles */
+    .status-row { display: flex; gap: 6px; }
+    .status-pill {
+      flex: 1; padding: 7px 4px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface2); color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+      text-align: center; cursor: pointer; transition: all 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .status-pill.active-leyendo    { background: #1a3a1a; color: #4caf50; border-color: #4caf50; }
+    .status-pill.active-pendiente  { background: #1a1a3a; color: #5c9bd6; border-color: #5c9bd6; }
+    .status-pill.active-completado { background: #2a1a00; color: #ff9800; border-color: #ff9800; }
 
     /* EMPTY */
     .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
@@ -154,12 +166,8 @@
     .form-error { font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
     .form-error.show { display: block; }
 
-    /* IMAGE UPLOAD en formulario */
-    .img-upload-area {
-      border: 2px dashed var(--border); border-radius: 10px;
-      padding: 20px; text-align: center; cursor: pointer;
-      transition: border-color 0.2s, background 0.2s; position: relative;
-    }
+    /* Upload */
+    .img-upload-area { border: 2px dashed var(--border); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; }
     .img-upload-area:hover { border-color: var(--red); background: var(--red-dim); }
     .img-upload-area.has-image { padding: 0; border-style: solid; border-color: var(--red-dark); overflow: hidden; }
     .img-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
@@ -179,10 +187,8 @@
 </head>
 <body>
 
-  <!-- Loading -->
   <div class="loading-screen" id="loadingScreen"><div class="spinner"></div></div>
 
-  <!-- Login -->
   <div class="login-screen hidden" id="loginScreen">
     <div class="login-logo">MANHWA<br><span>TRACKER</span></div>
     <p class="login-sub">Tu catálogo personal sincronizado en la nube.</p>
@@ -198,7 +204,6 @@
     <span class="login-error" id="loginError">Error al iniciar sesión. Intenta de nuevo.</span>
   </div>
 
-  <!-- App -->
   <div id="app" style="display:none">
     <header class="header">
       <div class="header-top">
@@ -235,7 +240,6 @@
     <div class="bottom-sheet" id="bottomSheet" role="dialog" aria-modal="true">
       <div class="sheet-handle"></div>
       <h2 class="sheet-title">AGREGAR MANHWA</h2>
-
       <div class="form-group">
         <label class="form-label" for="inputTitle">Título</label>
         <input type="text" class="form-input" id="inputTitle" placeholder="Ej: Solo Leveling" maxlength="100" autocomplete="off">
@@ -264,28 +268,20 @@
           <option value="Completado">Completado</option>
         </select>
       </div>
-
-      <!-- Subida de imagen -->
       <div class="form-group">
         <label class="form-label">Portada (opcional)</label>
         <div class="img-upload-area" id="uploadArea">
           <input type="file" id="inputCoverFile" accept="image/png,image/jpeg,image/webp">
-          <svg width="28" height="28" fill="none" stroke="#555" stroke-width="1.5" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <path d="M3 9h18M9 21V9"/>
-          </svg>
+          <svg width="28" height="28" fill="none" stroke="#555" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
           <p>Toca para subir imagen</p>
         </div>
-        <p class="img-upload-hint">PNG, JPG o WEBP · Se redimensiona a 300×400px automáticamente</p>
+        <p class="img-upload-hint">PNG, JPG o WEBP · Se redimensiona automáticamente</p>
       </div>
-
       <button class="btn-submit" id="btnSubmit">AGREGAR</button>
     </div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Canvas oculto para redimensionar imágenes -->
   <canvas id="resizeCanvas" style="display:none"></canvas>
 
   <script type="module">
@@ -311,13 +307,11 @@
     const ALLOWED_STATUSES = ['Leyendo', 'Pendiente', 'Completado'];
     const ALLOWED_GENRES   = ['Acción', 'Romance', 'Fantasía', 'Terror', 'Drama'];
     const TITLE_REGEX      = /^.{1,100}$/;
-    const COVER_MAX_W      = 300;
-    const COVER_MAX_H      = 400;
-    const COVER_QUALITY    = 0.75;
+    const COVER_MAX_W = 300, COVER_MAX_H = 400, COVER_QUALITY = 0.75;
 
     const state = { items: [], filter: 'todos', search: '', uid: null, unsub: null, pendingCover: null };
 
-    // === SEGURIDAD ===
+    // SEGURIDAD
     function sanitizeInput(str) {
       return String(str).trim().replace(/[<>"'`&]/g, c =>
         ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;','&':'&amp;'}[c])
@@ -328,7 +322,7 @@
     function isAllowedStatus(v) { return ALLOWED_STATUSES.includes(v); }
     function isAllowedGenre(v)  { return ALLOWED_GENRES.includes(v); }
 
-    // === IMAGEN — redimensionar con canvas para mantener peso bajo ===
+    // IMAGEN
     function resizeImageToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -340,12 +334,9 @@
             const canvas = document.getElementById('resizeCanvas');
             let w = img.width, h = img.height;
             const ratio = Math.min(COVER_MAX_W / w, COVER_MAX_H / h, 1);
-            w = Math.round(w * ratio);
-            h = Math.round(h * ratio);
-            canvas.width  = w;
-            canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
+            canvas.width  = Math.round(w * ratio);
+            canvas.height = Math.round(h * ratio);
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
             resolve(canvas.toDataURL('image/jpeg', COVER_QUALITY));
           };
           img.src = e.target.result;
@@ -354,35 +345,31 @@
       });
     }
 
-    // === FIRESTORE ===
+    // FIRESTORE
     function userCol() { return collection(db, 'users', state.uid, 'manhwas'); }
 
     function subscribeToItems() {
       if (state.unsub) state.unsub();
-      const q = query(userCol(), orderBy('createdAt', 'desc'));
-      state.unsub = onSnapshot(q, snap => {
+      state.unsub = onSnapshot(query(userCol(), orderBy('createdAt','desc')), snap => {
         state.items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderList(); renderCounters();
       });
     }
 
-    // === CRUD ===
+    // CRUD
     async function addItem() {
       if (!validateForm()) return;
       const genre  = document.getElementById('inputGenre').value;
       const status = document.getElementById('inputStatus').value;
       if (!isAllowedGenre(genre) || !isAllowedStatus(status)) return;
-
       const btn = document.getElementById('btnSubmit');
-      btn.disabled = true;
-      btn.textContent = 'GUARDANDO...';
-
+      btn.disabled = true; btn.textContent = 'GUARDANDO...';
       try {
         await addDoc(userCol(), {
           title:     sanitizeInput(document.getElementById('inputTitle').value),
           genre, status,
           chapter:   parseInt(document.getElementById('inputChapter').value, 10) || 0,
-          cover:     state.pendingCover || '',   // base64 o vacío
+          cover:     state.pendingCover || '',
           createdAt: Date.now(),
         });
         closeSheet(); resetForm(); showToast('Manhwa agregado ✓');
@@ -391,33 +378,32 @@
     }
 
     async function deleteItem(id) {
-      try { await deleteDoc(doc(db, 'users', state.uid, 'manhwas', id)); showToast('Eliminado'); }
+      try { await deleteDoc(doc(db,'users',state.uid,'manhwas',id)); showToast('Eliminado'); }
       catch { showToast('Error al eliminar.'); }
     }
 
     async function updateChapter(id, value) {
       if (!isValidChapter(value)) return;
-      try { await updateDoc(doc(db, 'users', state.uid, 'manhwas', id), { chapter: parseInt(value, 10) }); }
-      catch (e) { console.error(e); }
+      try { await updateDoc(doc(db,'users',state.uid,'manhwas',id), { chapter: parseInt(value,10) }); }
+      catch(e) { console.error(e); }
     }
 
     async function updateStatus(id, value) {
       if (!isAllowedStatus(value)) return;
-      try { await updateDoc(doc(db, 'users', state.uid, 'manhwas', id), { status: value }); }
-      catch (e) { console.error(e); }
+      try { await updateDoc(doc(db,'users',state.uid,'manhwas',id), { status: value }); }
+      catch(e) { console.error(e); }
     }
 
-    // Actualizar portada desde la card
     async function updateCover(id, file) {
       try {
         showToast('Procesando imagen...');
         const base64 = await resizeImageToBase64(file);
-        await updateDoc(doc(db, 'users', state.uid, 'manhwas', id), { cover: base64 });
+        await updateDoc(doc(db,'users',state.uid,'manhwas',id), { cover: base64 });
         showToast('Portada actualizada ✓');
       } catch { showToast('Error al actualizar portada.'); }
     }
 
-    // === VALIDACIÓN ===
+    // VALIDACIÓN
     function validateForm() {
       let valid = true;
       const se = (inp, err, show) => {
@@ -430,12 +416,14 @@
       return valid;
     }
 
-    // === FILTRO ===
-    function filterByStatus(items) { return state.filter === 'todos' ? items : items.filter(i => i.status === state.filter); }
-    function searchByTitle(items)  { if (!state.search.trim()) return items; const t = state.search.toLowerCase(); return items.filter(i => i.title.toLowerCase().includes(t)); }
-    function getFiltered()         { return searchByTitle(filterByStatus(state.items)); }
+    // FILTRO
+    function getFiltered() {
+      let items = state.filter === 'todos' ? state.items : state.items.filter(i => i.status === state.filter);
+      if (state.search.trim()) { const t = state.search.toLowerCase(); items = items.filter(i => i.title.toLowerCase().includes(t)); }
+      return items;
+    }
 
-    // === RENDER ===
+    // RENDER
     function createPlaceholderEl() {
       const ph = document.createElement('div'); ph.className = 'cover-placeholder';
       ph.innerHTML = `<svg width="26" height="26" fill="none" stroke="#e63946" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`;
@@ -444,73 +432,119 @@
 
     function createCoverWrap(item) {
       const wrap = document.createElement('div'); wrap.className = 'card-cover-wrap';
-
-      // Imagen o placeholder
       if (item.cover) {
         const img = document.createElement('img'); img.className = 'card-cover';
         img.src = item.cover; img.alt = ''; img.loading = 'lazy';
         img.onerror = () => img.replaceWith(createPlaceholderEl());
         wrap.appendChild(img);
-      } else {
-        wrap.appendChild(createPlaceholderEl());
-      }
+      } else { wrap.appendChild(createPlaceholderEl()); }
 
-      // Botón de editar portada (hover)
       const editBtn = document.createElement('button'); editBtn.className = 'cover-edit-btn'; editBtn.title = 'Cambiar portada';
       editBtn.innerHTML = `<svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
-
-      // Input file oculto
-      const fileInput = document.createElement('input'); fileInput.type = 'file';
-      fileInput.className = 'cover-file-input'; fileInput.accept = 'image/png,image/jpeg,image/webp';
-      fileInput.addEventListener('change', async e => {
-        const file = e.target.files[0]; if (!file) return;
-        await updateCover(item.id, file);
-      });
-
+      const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.className='cover-file-input'; fileInput.accept='image/png,image/jpeg,image/webp';
+      fileInput.addEventListener('change', async e => { const f = e.target.files[0]; if(f) await updateCover(item.id, f); });
       editBtn.addEventListener('click', () => fileInput.click());
       wrap.appendChild(editBtn); wrap.appendChild(fileInput);
       return wrap;
     }
 
-    function createBadge(status) {
-      const b = document.createElement('span'); b.className = 'status-badge';
-      b.classList.add({'Leyendo':'badge-leyendo','Pendiente':'badge-pendiente','Completado':'badge-completado'}[status]||'badge-pendiente');
-      b.textContent = status; return b;
+    // === STEPPER TÁCTIL de capítulo ===
+    function createChapterStepper(item) {
+      const row = document.createElement('div'); row.className = 'chapter-row';
+
+      const lbl = document.createElement('span'); lbl.className = 'chapter-label-txt'; lbl.textContent = 'Capítulo';
+
+      const stepper = document.createElement('div'); stepper.className = 'chapter-stepper';
+
+      const btnMinus = document.createElement('button'); btnMinus.className = 'step-btn'; btnMinus.textContent = '−'; btnMinus.setAttribute('aria-label','Capítulo anterior');
+      const numEl    = document.createElement('span');   numEl.className = 'step-num'; numEl.textContent = item.chapter;
+      const btnPlus  = document.createElement('button'); btnPlus.className = 'step-btn'; btnPlus.textContent = '+'; btnPlus.setAttribute('aria-label','Siguiente capítulo');
+
+      let currentChapter = item.chapter;
+
+      // Tap en número → input manual
+      numEl.addEventListener('click', () => {
+        const inp = document.createElement('input');
+        inp.type = 'number'; inp.className = 'step-num-input';
+        inp.value = currentChapter; inp.min = '0';
+        numEl.replaceWith(inp);
+        inp.focus(); inp.select();
+        const confirm = async () => {
+          const val = parseInt(inp.value, 10);
+          currentChapter = isNaN(val) || val < 0 ? currentChapter : val;
+          inp.replaceWith(numEl);
+          numEl.textContent = currentChapter;
+          await updateChapter(item.id, currentChapter);
+        };
+        inp.addEventListener('blur', confirm);
+        inp.addEventListener('keydown', e => { if(e.key==='Enter') inp.blur(); });
+      });
+
+      btnMinus.addEventListener('click', async () => {
+        if (currentChapter <= 0) return;
+        currentChapter--;
+        numEl.textContent = currentChapter;
+        await updateChapter(item.id, currentChapter);
+      });
+
+      btnPlus.addEventListener('click', async () => {
+        currentChapter++;
+        numEl.textContent = currentChapter;
+        await updateChapter(item.id, currentChapter);
+      });
+
+      stepper.appendChild(btnMinus); stepper.appendChild(numEl); stepper.appendChild(btnPlus);
+      row.appendChild(lbl); row.appendChild(stepper);
+      return row;
+    }
+
+    // === PILLS TÁCTILES de estado ===
+    function createStatusPills(item) {
+      const row = document.createElement('div'); row.className = 'status-row';
+      const classMap = { Leyendo:'active-leyendo', Pendiente:'active-pendiente', Completado:'active-completado' };
+
+      ALLOWED_STATUSES.forEach(st => {
+        const pill = document.createElement('button'); pill.className = 'status-pill';
+        pill.textContent = st;
+        if (st === item.status) pill.classList.add(classMap[st]);
+        pill.addEventListener('click', async () => {
+          if (st === item.status) return; // ya activo
+          // No se llama updateStatus porque onSnapshot re-renderiza la card automáticamente
+          await updateStatus(item.id, st);
+        });
+        row.appendChild(pill);
+      });
+      return row;
     }
 
     function createCard(item) {
       const card = document.createElement('div'); card.className = 'card';
-      card.appendChild(createCoverWrap(item));
+
+      // Top: cover + info básica
+      const top = document.createElement('div'); top.className = 'card-top';
+      top.appendChild(createCoverWrap(item));
 
       const body = document.createElement('div'); body.className = 'card-body';
       const hdr  = document.createElement('div'); hdr.className = 'card-header';
-
-      const ttl = document.createElement('div'); ttl.className = 'card-title'; ttl.textContent = item.title;
-      const del = document.createElement('button'); del.className = 'delete-btn'; del.setAttribute('aria-label','Eliminar');
+      const ttl  = document.createElement('div'); ttl.className = 'card-title'; ttl.textContent = item.title;
+      const del  = document.createElement('button'); del.className = 'delete-btn'; del.setAttribute('aria-label','Eliminar');
       del.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`;
       del.addEventListener('click', () => deleteItem(item.id));
       hdr.appendChild(ttl); hdr.appendChild(del);
 
       const genre = document.createElement('div'); genre.className = 'card-genre'; genre.textContent = item.genre;
 
-      const ctrl   = document.createElement('div'); ctrl.className = 'card-controls';
-      const chWrap = document.createElement('div'); chWrap.className = 'chapter-control';
-      const chLbl  = document.createElement('span'); chLbl.className = 'chapter-label'; chLbl.textContent = 'Cap.';
-      const chInp  = document.createElement('input'); chInp.type = 'number'; chInp.className = 'chapter-input';
-      chInp.value = item.chapter; chInp.min = '0'; chInp.setAttribute('aria-label','Capítulo');
-      chInp.addEventListener('change', e => updateChapter(item.id, e.target.value));
-      chWrap.appendChild(chLbl); chWrap.appendChild(chInp);
+      body.appendChild(hdr); body.appendChild(genre);
+      top.appendChild(body);
+      card.appendChild(top);
 
-      const stSel = document.createElement('select'); stSel.className = 'status-select';
-      ALLOWED_STATUSES.forEach(opt => {
-        const o = document.createElement('option'); o.value = opt; o.textContent = opt;
-        if (opt === item.status) o.selected = true; stSel.appendChild(o);
-      });
-      stSel.addEventListener('change', e => updateStatus(item.id, e.target.value));
+      // Bottom: controles táctiles
+      const ctrl = document.createElement('div'); ctrl.className = 'card-controls';
+      ctrl.appendChild(createChapterStepper(item));
+      ctrl.appendChild(createStatusPills(item));
+      card.appendChild(ctrl);
 
-      ctrl.appendChild(chWrap); ctrl.appendChild(stSel);
-      body.appendChild(hdr); body.appendChild(genre); body.appendChild(createBadge(item.status)); body.appendChild(ctrl);
-      card.appendChild(body); return card;
+      return card;
     }
 
     function renderList() {
@@ -520,7 +554,7 @@
       if (!filtered.length) {
         const e = document.createElement('div'); e.className = 'empty-state';
         e.innerHTML = `<svg width="48" height="48" fill="none" stroke="#333" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`;
-        const p = document.createElement('p'); p.textContent = state.items.length === 0 ? 'Sin manhwas. Agrega uno con el botón +' : 'Sin resultados.';
+        const p = document.createElement('p'); p.textContent = state.items.length===0 ? 'Sin manhwas. Agrega uno con el botón +' : 'Sin resultados.';
         e.appendChild(p); c.appendChild(e); return;
       }
       const frag = document.createDocumentFragment();
@@ -531,116 +565,80 @@
     function renderCounters() {
       const c = document.getElementById('counters');
       while (c.firstChild) c.removeChild(c.firstChild);
-      const counts = { Total: state.items.length, Leyendo: state.items.filter(i=>i.status==='Leyendo').length, Pendiente: state.items.filter(i=>i.status==='Pendiente').length, Completado: state.items.filter(i=>i.status==='Completado').length };
+      const counts = { Total:state.items.length, Leyendo:state.items.filter(i=>i.status==='Leyendo').length, Pendiente:state.items.filter(i=>i.status==='Pendiente').length, Completado:state.items.filter(i=>i.status==='Completado').length };
       const frag = document.createDocumentFragment();
       Object.entries(counts).forEach(([lbl,val]) => {
         const pill = document.createElement('div'); pill.className = 'counter-pill';
-        pill.appendChild(document.createTextNode(lbl + ': '));
+        pill.appendChild(document.createTextNode(lbl+': '));
         const num = document.createElement('span'); num.textContent = val;
         pill.appendChild(num); frag.appendChild(pill);
       });
       c.appendChild(frag);
     }
 
-    // === SHEET ===
-    function openSheet()  {
-      document.getElementById('bottomSheet').classList.add('show');
-      document.getElementById('overlay').classList.add('show');
-      document.getElementById('fab').classList.add('open');
-      setTimeout(()=>document.getElementById('inputTitle').focus(), 350);
-    }
-    function closeSheet() {
-      document.getElementById('bottomSheet').classList.remove('show');
-      document.getElementById('overlay').classList.remove('show');
-      document.getElementById('fab').classList.remove('open');
-    }
-    function resetForm() {
-      ['inputTitle','inputChapter'].forEach(id => { document.getElementById(id).value = id==='inputChapter'?'0':''; document.getElementById(id).classList.remove('error'); });
-      document.getElementById('inputStatus').value = 'Leyendo';
-      document.getElementById('inputGenre').value  = 'Acción';
-      ['errorTitle','errorChapter'].forEach(id => document.getElementById(id).classList.remove('show'));
-      // Reset upload area
-      state.pendingCover = null;
-      const area = document.getElementById('uploadArea');
-      area.classList.remove('has-image');
-      const oldPreview = area.querySelector('.img-preview');
-      if (oldPreview) oldPreview.remove();
-      const icon = area.querySelector('svg'); if (icon) icon.style.display = '';
-      const txt  = area.querySelector('p');  if (txt)  txt.style.display  = '';
-      document.getElementById('inputCoverFile').value = '';
+    // SHEET
+    function openSheet()  { document.getElementById('bottomSheet').classList.add('show'); document.getElementById('overlay').classList.add('show'); document.getElementById('fab').classList.add('open'); setTimeout(()=>document.getElementById('inputTitle').focus(),350); }
+    function closeSheet() { document.getElementById('bottomSheet').classList.remove('show'); document.getElementById('overlay').classList.remove('show'); document.getElementById('fab').classList.remove('open'); }
+    function resetForm()  {
+      ['inputTitle','inputChapter'].forEach(id=>{ document.getElementById(id).value=id==='inputChapter'?'0':''; document.getElementById(id).classList.remove('error'); });
+      document.getElementById('inputStatus').value='Leyendo'; document.getElementById('inputGenre').value='Acción';
+      ['errorTitle','errorChapter'].forEach(id=>document.getElementById(id).classList.remove('show'));
+      state.pendingCover=null;
+      const area=document.getElementById('uploadArea'); area.classList.remove('has-image');
+      const prev=area.querySelector('.img-preview'); if(prev) prev.remove();
+      const icon=area.querySelector('svg'); if(icon) icon.style.display='';
+      const txt=area.querySelector('p'); if(txt) txt.style.display='';
+      document.getElementById('inputCoverFile').value='';
     }
 
-    // === TOAST ===
-    let toastTimer = null;
-    function showToast(msg) {
-      const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
-      clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
-    }
+    // TOAST
+    let toastTimer=null;
+    function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
 
-    // === UPLOAD AREA en formulario ===
+    // UPLOAD en formulario
     document.getElementById('inputCoverFile').addEventListener('change', async e => {
-      const file = e.target.files[0]; if (!file) return;
+      const file=e.target.files[0]; if(!file) return;
       try {
         showToast('Procesando imagen...');
-        const base64 = await resizeImageToBase64(file);
-        state.pendingCover = base64;
-        const area = document.getElementById('uploadArea');
-        area.classList.add('has-image');
-        const icon = area.querySelector('svg'); if (icon) icon.style.display = 'none';
-        const txt  = area.querySelector('p');  if (txt)  txt.style.display  = 'none';
-        let preview = area.querySelector('.img-preview');
-        if (!preview) { preview = document.createElement('img'); preview.className = 'img-preview'; area.appendChild(preview); }
-        preview.src = base64;
-        showToast('Imagen lista ✓');
+        const base64=await resizeImageToBase64(file); state.pendingCover=base64;
+        const area=document.getElementById('uploadArea'); area.classList.add('has-image');
+        const icon=area.querySelector('svg'); if(icon) icon.style.display='none';
+        const txt=area.querySelector('p'); if(txt) txt.style.display='none';
+        let prev=area.querySelector('.img-preview');
+        if(!prev){ prev=document.createElement('img'); prev.className='img-preview'; area.appendChild(prev); }
+        prev.src=base64; showToast('Imagen lista ✓');
       } catch { showToast('Error al procesar imagen.'); }
     });
 
-    // === AUTH ===
-    const provider = new GoogleAuthProvider();
-    document.getElementById('btnGoogle').addEventListener('click', async () => {
-      document.getElementById('loginError').classList.remove('show');
-      try { await signInWithPopup(auth, provider); }
-      catch { document.getElementById('loginError').classList.add('show'); }
-    });
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      if (state.unsub) state.unsub();
-      await signOut(auth);
-    });
-    onAuthStateChanged(auth, user => {
+    // AUTH
+    const provider=new GoogleAuthProvider();
+    document.getElementById('btnGoogle').addEventListener('click', async()=>{ document.getElementById('loginError').classList.remove('show'); try{ await signInWithPopup(auth,provider); }catch{ document.getElementById('loginError').classList.add('show'); } });
+    document.getElementById('logoutBtn').addEventListener('click', async()=>{ if(state.unsub) state.unsub(); await signOut(auth); });
+    onAuthStateChanged(auth, user=>{
       document.getElementById('loadingScreen').classList.add('hidden');
-      if (user) {
-        state.uid = user.uid;
-        const av = document.getElementById('userAvatar');
-        if (user.photoURL) av.src = user.photoURL; else av.style.display = 'none';
+      if(user){
+        state.uid=user.uid;
+        const av=document.getElementById('userAvatar'); if(user.photoURL) av.src=user.photoURL; else av.style.display='none';
         document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('app').style.display = 'block';
+        document.getElementById('app').style.display='block';
         subscribeToItems();
       } else {
-        state.uid = null; state.items = [];
-        if (state.unsub) { state.unsub(); state.unsub = null; }
-        document.getElementById('app').style.display = 'none';
+        state.uid=null; state.items=[];
+        if(state.unsub){ state.unsub(); state.unsub=null; }
+        document.getElementById('app').style.display='none';
         document.getElementById('loginScreen').classList.remove('hidden');
       }
     });
 
-    // === EVENTS ===
-    document.getElementById('fab').addEventListener('click', () => document.getElementById('bottomSheet').classList.contains('show') ? closeSheet() : openSheet());
-    document.getElementById('overlay').addEventListener('click', closeSheet);
-    document.getElementById('tabs').addEventListener('click', e => {
-      const btn = e.target.closest('.tab'); if (!btn) return;
-      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-      btn.classList.add('active'); state.filter = btn.dataset.filter; renderList();
-    });
-    document.getElementById('searchToggle').addEventListener('click', () => {
-      const wrap = document.getElementById('searchWrap'); const inp = document.getElementById('searchInput');
-      wrap.classList.toggle('open');
-      if (wrap.classList.contains('open')) inp.focus();
-      else { inp.value = ''; state.search = ''; renderList(); }
-    });
-    document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; renderList(); });
-    document.getElementById('btnSubmit').addEventListener('click', addItem);
-    document.getElementById('inputTitle').addEventListener('keydown', e => { if (e.key==='Enter') addItem(); });
-    document.addEventListener('keydown', e => { if (e.key==='Escape') closeSheet(); });
+    // EVENTS
+    document.getElementById('fab').addEventListener('click',()=>document.getElementById('bottomSheet').classList.contains('show')?closeSheet():openSheet());
+    document.getElementById('overlay').addEventListener('click',closeSheet);
+    document.getElementById('tabs').addEventListener('click',e=>{ const btn=e.target.closest('.tab'); if(!btn) return; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); state.filter=btn.dataset.filter; renderList(); });
+    document.getElementById('searchToggle').addEventListener('click',()=>{ const wrap=document.getElementById('searchWrap'); const inp=document.getElementById('searchInput'); wrap.classList.toggle('open'); if(wrap.classList.contains('open')) inp.focus(); else{ inp.value=''; state.search=''; renderList(); } });
+    document.getElementById('searchInput').addEventListener('input',e=>{ state.search=e.target.value; renderList(); });
+    document.getElementById('btnSubmit').addEventListener('click',addItem);
+    document.getElementById('inputTitle').addEventListener('keydown',e=>{ if(e.key==='Enter') addItem(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSheet(); });
   </script>
 </body>
 </html>
